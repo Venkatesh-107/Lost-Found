@@ -123,13 +123,13 @@ App
 
 ### Collection: `posts`
 | Field         | Type     | Notes                                   |
-|---------------|----------|-----------------------------------------|
+| ------------- | -------- | --------------------------------------- |
 | `id`          | string   | Auto-generated PB ID                    |
 | `image`       | file     | Lost item image                         |
 | `description` | text     | Short description (max 200 chars)       |
-| `status`      | select   | `active` \| `claimed`                  |
+| `status`      | select   | `active` \| `claimed`                   |
 | `posted_by`   | relation | → `users.id`                            |
-| `claimed_by`  | relation | → `users.id` (nullable)                |
+| `claimed_by`  | relation | → `users.id` (nullable)                 |
 | `claimed_at`  | datetime | When admin marked as claimed (nullable) |
 | `created`     | datetime | Auto                                    |
 
@@ -160,14 +160,14 @@ App
 ---
 
 ### Collection: `claim_attempts`
-| Field          | Type     | Notes                              |
-|----------------|----------|------------------------------------|
-| `id`           | string   | Auto-generated PB ID               |
-| `post_id`      | relation | → `posts.id`                       |
-| `candidate_id` | relation | → `users.id`                       |
-| `answers`      | json     | Submitted Q&A pairs                |
-| `passed`       | bool     | Whether all answers were correct   |
-| `created`      | datetime | Auto                               |
+| Field          | Type     | Notes                            |
+| -------------- | -------- | -------------------------------- |
+| `id`           | string   | Auto-generated PB ID             |
+| `post_id`      | relation | → `posts.id`                     |
+| `candidate_id` | relation | → `users.id`                     |
+| `answers`      | json     | Submitted Q&A pairs              |
+| `passed`       | bool     | Whether all answers were correct |
+| `created`      | datetime | Auto                             |
 
 ---
 
@@ -277,14 +277,14 @@ For each matched post:
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│                     Production                        │
+│                     Production                       │
 │                                                      │
 │  ┌─────────────┐    ┌──────────────┐    ┌─────────┐  │
-│  │  Vite PWA   │───▶│  Node.js     │───▶│PocketBase│  │
-│  │  (Static    │    │  Express     │    │ (Backend │  │
-│  │   Hosting)  │    │  (Cron +     │    │  + DB +  │  │
-│  │  Vercel /   │    │   Notify)    │    │  Files)  │  │
-│  │  Netlify    │    │  VPS/Render  │    │  VPS     │  │
+│  │  Vite PWA   │───▶│  Node.js     │───▶│PocketBase│ │
+│  │  (Static    │    │  Express     │    │ (Backend │ │
+│  │   Hosting)  │    │  (Cron +     │    │  + DB +  │ │
+│  │  Vercel /   │    │   Notify)    │    │  Files)  │ │
+│  │  Netlify    │    │  VPS/Render  │    │  VPS     │ │
 │  └─────────────┘    └──────────────┘    └─────────┘  │
 │                                                      │
 └──────────────────────────────────────────────────────┘

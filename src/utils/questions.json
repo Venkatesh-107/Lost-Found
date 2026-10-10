@@ -1,0 +1,420 @@
+{
+  "electronics": {
+    "mobile_phones": [
+      "What is the brand and model of the phone?",
+      "Can you describe the phone case or any distinctive marks?",
+      "Does the phone have any scratches, cracks, or other unique physical features?",
+      "Can you describe a distinctive accessory attached to the phone?"
+    ],
+    "phone_chargers_and_adapters": [
+      "What type of charger or adapter is it?",
+      "What is its brand or model, if known?",
+      "Can you describe its colour and cable length?",
+      "Does it have any distinctive marks, labels, or damage?"
+    ],
+    "earphones_and_earbuds": [
+      "What is the brand or model of the earphones?",
+      "What is the colour of the earphones or earbuds?",
+      "Can you describe the charging case, if applicable?",
+      "Are there any distinctive marks, accessories, or signs of damage?"
+    ],
+    "headphones": [
+      "What is the brand or model of the headphones?",
+      "What is their colour?",
+      "Can you describe the ear cushions or headband?",
+      "Are there any distinctive marks, stickers, or signs of damage?"
+    ],
+    "usb_drives_and_pen_drives": [
+      "What is the shape and colour of the USB drive?",
+      "What is its approximate storage capacity, if known?",
+      "Does it have a cap, keychain, or other attachment?",
+      "Can you describe any distinctive markings or physical features?"
+    ],
+    "power_banks": [
+      "What is the brand or model of the power bank?",
+      "What is its colour and approximate size?",
+      "Can you describe the number and type of ports?",
+      "Are there any distinctive marks, labels, or accessories?"
+    ],
+    "laptops_and_laptop_chargers": [
+      "What is the brand and model of the laptop or charger?",
+      "Can you describe the laptop's colour and physical appearance?",
+      "Are there any distinctive stickers, scratches, or marks?",
+      "Can you describe a distinctive feature of the charger or laptop bag, if applicable?"
+    ],
+    "calculators": [
+      "What is the brand and model of the calculator?",
+      "What is its colour?",
+      "Can you describe its cover or protective case?",
+      "Are there any handwritten names, stickers, or distinctive marks?"
+    ],
+    "smartwatches": [
+      "What is the brand and model of the smartwatch?",
+      "What is the colour and style of its strap?",
+      "Can you describe any distinctive marks on the watch or strap?",
+      "Can you describe a distinctive accessory or physical feature?"
+    ]
+  },
+  "personal_belongings": {
+    "water_bottles": [
+      "What is the brand or type of the water bottle?",
+      "What is its colour, size, and shape?",
+      "Can you describe any stickers, scratches, or distinctive marks?",
+      "What type and colour is its lid, cap, or handle?"
+    ],
+    "lunch_boxes": [
+      "What is the brand or type of the lunch box?",
+      "What is its colour, shape, and approximate size?",
+      "How many compartments does it have?",
+      "Can you describe any distinctive marks, stickers, or accessories?"
+    ],
+    "backpacks_and_handbags": [
+      "What is the brand or style of the bag?",
+      "What is its colour, size, and general design?",
+      "Can you describe its pockets, straps, or compartments?",
+      "Are there any distinctive marks, keychains, or accessories?"
+    ],
+    "wallets_and_purses": [
+      "What is the colour, material, and style of the wallet or purse?",
+      "Can you describe its size and number of compartments?",
+      "Are there any distinctive marks, stitching patterns, or accessories?",
+      "Can you identify a non-sensitive item or feature associated with the wallet?"
+    ],
+    "watches": [
+      "What is the brand or style of the watch?",
+      "What is the colour and design of its dial?",
+      "What material and colour is the strap?",
+      "Are there any distinctive scratches, marks, or features?"
+    ],
+    "spectacles_and_sunglasses": [
+      "What is the colour and shape of the frames?",
+      "What material are the frames made from, if known?",
+      "Can you describe the style or colour of the lenses?",
+      "Are there any distinctive marks or details on the arms or case?"
+    ],
+    "umbrellas": [
+      "What is the colour and pattern of the umbrella?",
+      "What type of handle does it have?",
+      "Is it a folding or full-length umbrella?",
+      "Are there any distinctive marks, labels, or damaged parts?"
+    ],
+    "caps": [
+      "What is the colour and style of the cap?",
+      "Is there a logo, design, or text on it?",
+      "Can you describe the material or shape of the brim?",
+      "Are there any distinctive marks or accessories?"
+    ],
+    "jackets_and_sweaters": [
+      "What is the colour and type of the clothing item?",
+      "What brand or logo does it have, if any?",
+      "Can you describe its pockets, buttons, zip, or hood?",
+      "Are there any distinctive patterns, marks, or accessories?"
+    ]
+  },
+  "identity_cards_and_documents": {
+    "college_id_cards": [
+      "Which college or institution issued the ID card?",
+      "What is the general design or colour of the card?",
+      "Can you identify a distinctive feature of the card holder or lanyard?",
+      "Can the college administration verify your ownership using its approved student records?"
+    ],
+    "bus_passes": [
+      "Which transport service or institution issued the bus pass?",
+      "What is the general colour or design of the pass?",
+      "What type of pass is it, such as a student or monthly pass?",
+      "Can the issuing authority verify ownership without publicly exposing the pass number?"
+    ],
+    "library_cards": [
+      "Which institution issued the library card?",
+      "What is the general design or colour of the card?",
+      "Does it have a distinctive holder or protective cover?",
+      "Can the library verify your ownership using its official records?"
+    ],
+    "driving_licences": [
+      "Which issuing authority issued the driving licence?",
+      "What type of document or card format is it?",
+      "Can you describe its general appearance without revealing the licence number?",
+      "Can the issuing authority or an authorized administrator verify your identity securely?"
+    ],
+    "debit_cards": [
+      "Which bank issued the card?",
+      "What is the general colour or design of the card?",
+      "Does it have a distinctive card holder or sleeve?",
+      "Can the bank or an authorized administrator arrange a safe return without requesting your PIN or full card number?"
+    ],
+    "hall_tickets": [
+      "Which examination or institution issued the hall ticket?",
+      "What is the general layout or colour of the document?",
+      "Can you identify a non-sensitive feature, such as the examination title or document format?",
+      "Can the institution verify your ownership through its official examination records?"
+    ],
+    "certificates_and_document_folders": [
+      "What type of certificate or document folder is it?",
+      "Which institution or organization issued the document, if applicable?",
+      "Can you describe the folder's colour, material, or design?",
+      "Can you identify a non-sensitive feature that distinguishes it from similar documents?"
+    ],
+    "notebooks_containing_personal_information": [
+      "What is the notebook's colour and approximate size?",
+      "What subject or general topic does it cover?",
+      "Can you describe its cover, binding, or distinctive markings?",
+      "Can you identify a page feature or accessory without disclosing confidential information?"
+    ]
+  },
+  "keys_and_small_accessories": {
+    "bike_keys": [
+      "How many keys are attached to the keyring?",
+      "Can you describe the keychain or keyring?",
+      "Can you identify a distinctive feature of the key head or key cover?",
+      "Can you verify ownership of the associated vehicle through an appropriate private verification process?"
+    ],
+    "car_keys": [
+      "Is it a physical key, remote key, or smart key?",
+      "Can you describe the key fob or keychain?",
+      "What is the general appearance of the key?",
+      "Can you provide suitable proof of vehicle ownership without publicly disclosing sensitive information?"
+    ],
+    "hostel_room_keys": [
+      "How many keys are attached to the keyring?",
+      "Can you describe the keychain or key cover?",
+      "Can hostel administration verify which authorized resident the key belongs to?",
+      "Can you describe a distinctive feature without revealing the room number publicly?"
+    ],
+    "locker_keys": [
+      "How many keys are attached to the keyring?",
+      "Can you describe the keychain or key cover?",
+      "What is the general shape or appearance of the key?",
+      "Can the relevant institution verify your locker assignment privately?"
+    ],
+    "keychains": [
+      "What is the keychain's shape or design?",
+      "What colours or materials does it contain?",
+      "Is there a character, symbol, or logo on it?",
+      "Are there any distinctive marks, attachments, or damaged parts?"
+    ],
+    "rings": [
+      "What material or general style is the ring?",
+      "What is its colour and design?",
+      "Does it contain a stone or decorative feature?",
+      "Are there any distinctive engravings or marks?"
+    ],
+    "bracelets": [
+      "What is the bracelet's material and colour?",
+      "Can you describe its design or pattern?",
+      "Does it contain charms, beads, or stones?",
+      "Are there any distinctive marks or attachments?"
+    ],
+    "necklaces": [
+      "What is the necklace's material and general colour?",
+      "Can you describe the chain or cord?",
+      "What does the pendant or decorative element look like, if present?",
+      "Are there any distinctive marks or attachments?"
+    ],
+    "earrings": [
+      "What is the general style of the earrings?",
+      "What colour and material are they?",
+      "Do they contain stones, beads, or decorative elements?",
+      "Are they studs, hoops, drops, or another design?"
+    ]
+  },
+  "academic_items": {
+    "textbooks": [
+      "What is the book's title and author?",
+      "What subject or edition does it cover?",
+      "Can you describe its cover colour and condition?",
+      "Are there any distinctive notes, labels, or markings on the book?"
+    ],
+    "notebooks": [
+      "What subject or topic is written in the notebook?",
+      "What is its cover colour and approximate size?",
+      "Can you describe its binding or cover design?",
+      "Are there any distinctive labels, stickers, or markings?"
+    ],
+    "record_notebooks": [
+      "Which subject or laboratory course is the record notebook for?",
+      "What is the cover colour and general format?",
+      "Can you describe a distinctive experiment, diagram, or section without revealing confidential information?",
+      "Are there any distinctive labels or physical markings?"
+    ],
+    "lab_manuals": [
+      "Which subject or laboratory is the manual for?",
+      "What is the title or edition, if known?",
+      "Can you describe its cover design?",
+      "Are there any distinctive notes, labels, or markings?"
+    ],
+    "drawing_instruments": [
+      "Which drawing instrument or set is it?",
+      "What is its brand or material, if known?",
+      "Can you describe its case or packaging?",
+      "Are there any distinctive marks, labels, or damaged parts?"
+    ],
+    "pencil_boxes": [
+      "What is the pencil box's colour and shape?",
+      "What material is it made from?",
+      "Can you describe its design, compartments, or closure?",
+      "Are there any distinctive stickers, labels, or marks?"
+    ],
+    "pens_and_pencils": [
+      "What is the brand or type of the pen or pencil?",
+      "What is its colour and design?",
+      "Can you describe any distinctive grip, clip, or decoration?",
+      "Are there any initials, labels, or unusual marks?"
+    ],
+    "geometry_boxes": [
+      "What is the brand or type of the geometry box?",
+      "What is the case's colour and design?",
+      "Which distinctive instruments or accessories are inside?",
+      "Are there any labels, stickers, or marks on the case?"
+    ],
+    "scientific_calculators": [
+      "What is the brand and model of the calculator?",
+      "What is its colour and general appearance?",
+      "Can you describe its cover or protective case?",
+      "Are there any distinctive marks, labels, or signs of wear?"
+    ],
+    "project_files": [
+      "What is the project's general subject or title?",
+      "What is the file's colour and format?",
+      "Can you describe its cover design or binding?",
+      "Are there any distinctive labels or non-sensitive markings?"
+    ]
+  },
+  "classroom_and_laboratory_items": {
+    "hdmi_adapters": [
+      "What type of HDMI adapter is it?",
+      "Can you describe its colour and shape?",
+      "What connector types does it have?",
+      "Are there any distinctive labels, marks, or accessories?"
+    ],
+    "usb_cables": [
+      "What connector types does the cable have?",
+      "What is its colour and approximate length?",
+      "Can you describe its material or connector design?",
+      "Are there any distinctive labels, marks, or damage?"
+    ],
+    "computer_accessories": [
+      "What type of computer accessory is it?",
+      "What is its brand or model, if known?",
+      "Can you describe its colour and physical design?",
+      "Are there any distinctive marks, labels, or accessories?"
+    ],
+    "lab_components": [
+      "What type of laboratory component is it?",
+      "Can you identify its general model or component type?",
+      "What are its distinctive physical features or markings?",
+      "Can the relevant laboratory staff verify its inventory record?"
+    ],
+    "engineering_drawing_tools": [
+      "What type of drawing tool is it?",
+      "What is its brand or material, if known?",
+      "Can you describe its case or storage arrangement?",
+      "Are there any distinctive markings or damaged parts?"
+    ],
+    "electronic_components": [
+      "What type of electronic component is it?",
+      "Can you describe its package, colour, or shape?",
+      "What model number or non-sensitive marking is visible?",
+      "Can you describe its packaging or associated accessories?"
+    ],
+    "project_kits": [
+      "What is the project kit's general purpose or name?",
+      "Can you describe the case or packaging?",
+      "Which major components or accessories belong to the kit?",
+      "Are there any distinctive labels, marks, or inventory tags?"
+    ],
+    "microcontroller_boards": [
+      "What is the board's manufacturer or model, if known?",
+      "Can you describe its board colour and layout?",
+      "Which distinctive connectors, modules, or components are attached?",
+      "Are there any labels, markings, or accessories associated with it?"
+    ]
+  },
+  "transport_and_campus_items": {
+    "transport_bus_passes": [
+      "Which transport provider or institution issued the pass?",
+      "What is the general design or colour of the pass?",
+      "What type of pass is it?",
+      "Can the issuing authority verify ownership privately?"
+    ],
+    "helmets": [
+      "What is the helmet's brand or model?",
+      "What is its colour and design?",
+      "Can you describe its lining, visor, or strap?",
+      "Are there any distinctive stickers, scratches, or marks?"
+    ],
+    "bike_gloves": [
+      "What is the colour and style of the gloves?",
+      "What material are they made from?",
+      "Can you describe their size or distinctive design?",
+      "Are there any distinctive marks, logos, or damaged areas?"
+    ],
+    "raincoats": [
+      "What is the raincoat's colour and style?",
+      "What is its approximate size or length?",
+      "Can you describe its hood, pockets, or fasteners?",
+      "Are there any distinctive patterns, labels, or marks?"
+    ],
+    "bicycle_locks": [
+      "What type of bicycle lock is it?",
+      "Can you describe its colour, material, or shape?",
+      "Does it have a key, combination mechanism, or other distinctive feature?",
+      "Are there any distinctive marks, labels, or accessories?"
+    ],
+    "sports_equipment": [
+      "What type of sports equipment is it?",
+      "What is its brand or model, if known?",
+      "Can you describe its colour, design, or size?",
+      "Are there any distinctive marks, labels, or accessories?"
+    ],
+    "water_bottles_on_college_buses": [
+      "What is the bottle's brand or type?",
+      "What is its colour, shape, and approximate size?",
+      "Can you describe any distinctive marks or stickers?",
+      "What type and colour is its cap, lid, or handle?"
+    ]
+  },
+  "sports_and_recreation": {
+    "cricket_bats": [
+      "What is the bat's brand or model?",
+      "Can you describe its handle grip and colour?",
+      "Are there any distinctive stickers, marks, or damage?",
+      "Can you describe its size or other unique physical features?"
+    ],
+    "badminton_rackets": [
+      "What is the brand or model of the racket?",
+      "What is the colour and design of the frame?",
+      "Can you describe the grip or overgrip?",
+      "Are there any distinctive marks, strings, or accessories?"
+    ],
+    "shuttlecocks": [
+      "What type or brand of shuttlecock is it?",
+      "What is its general colour and material?",
+      "Is it new, used, or stored in a particular container?",
+      "Can you describe any distinctive packaging or markings?"
+    ],
+    "footballs": [
+      "What is the brand or model of the football?",
+      "What is its colour and panel design?",
+      "Can you describe its size or distinctive markings?",
+      "Are there any stickers, signatures, or signs of damage?"
+    ],
+    "sports_shoes": [
+      "What is the brand and model of the shoes?",
+      "What is their colour and approximate size?",
+      "Can you describe the design, laces, or sole?",
+      "Are there any distinctive marks, wear patterns, or accessories?"
+    ],
+    "jerseys": [
+      "What is the jersey's colour and team design?",
+      "What is its approximate size?",
+      "Can you describe its number, logo, or printed design without exposing private details?",
+      "Are there any distinctive marks, patterns, or alterations?"
+    ],
+    "gym_bags": [
+      "What is the bag's brand or style?",
+      "What is its colour and approximate size?",
+      "Can you describe its compartments, straps, or zippers?",
+      "Are there any distinctive marks, logos, or attached accessories?"
+    ]
+  }
+}
