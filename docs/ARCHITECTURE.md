@@ -1,109 +1,86 @@
-# 🏗️ ARCHITECTURE.md — System Architecture
+# 🏗️ ARCHITECTURE.md — Tech Stack & Components
 > **Project:** Lost & Found PWA  
-> **Stack:** Vite · Node.js · PocketBase · PWA  
+> **Stack:** Vite · React · Node.js · PocketBase · PWA  
 > **Last Updated:** 2026-10-10
 
 ---
 
 ## 📌 Overview
 
-This document describes the **technical architecture** of the Lost & Found PWA — covering the frontend, backend, database schema, API contracts, and deployment topology.
+This document describes the **technical architecture**, **technology stack**, and **UI component structure** of the Lost & Found application.
 
 ---
 
-## 🗂️ Project Structure
+## 🛠️ Technology Stack
 
-```
-IF-zero&one/
-├── public/
-│   ├── manifest.json          # PWA manifest
-│   └── icons/                 # App icons (192x192, 512x512)
-│
-├── src/
-│   ├── main.js                # Vite entry point
-│   ├── App.jsx                # Root component with Router
-│   │
-│   ├── pages/
-│   │   ├── Login.jsx          # Login screen (admin/candidate split)
-│   │   ├── Home.jsx           # Candidate feed (Instagram-style)
-│   │   ├── Admin.jsx          # Admin dashboard
-│   │   └── NotFound.jsx       # 404 page
-│   │
-│   ├── components/
-│   │   ├── PostCard.jsx       # Single post card (image, desc, claim btn)
-│   │   ├── ClaimModal.jsx     # Q&A modal triggered by Claim button
-│   │   ├── UploadModal.jsx    # + icon upload sheet (image + description)
-│   │   ├── ClaimedBadge.jsx   # Overlay badge for claimed posts
-│   │   ├── FAB.jsx            # Floating Action Button (+)
-│   │   └── Navbar.jsx         # Top navigation bar
-│   │
-│   ├── services/
-│   │   ├── pb.js              # PocketBase client singleton
-│   │   ├── auth.service.js    # Login, logout, session management
-│   │   ├── post.service.js    # CRUD for posts collection
-│   │   ├── claim.service.js   # Claim logic, token generation
-│   │   └── cleanup.service.js # Cleanup trigger helpers
-│   │
-│   ├── hooks/
-│   │   ├── useAuth.js         # Auth state hook
-│   │   ├── useFeed.js         # Paginated feed data hook
-│   │   └── useClaim.js        # Claim state & Q&A hook
-│   │
-│   ├── store/
-│   │   └── authStore.js       # Global auth state (Zustand / Context)
-│   │
-│   └── utils/
-│       ├── tokenChain.js      # Claim token chain generator
-│       └── validators.js      # File & form validators
-│
-├── server/                    # Node.js companion server
-│   ├── index.js               # Express entry point
-│   ├── routes/
-│   │   ├── cleanup.route.js   # Manual/cron trigger for cleanup
-│   │   └── notify.route.js    # Admin notification endpoint
-│   └── cron/
-│       └── cleanupJob.js      # node-cron job for 20-day deletion
-│
-├── pocketbase/
-│   └── pb_schema.json         # PocketBase collection schema export
-│
-├── docs/
-│   ├── AGENTS.md
-│   ├── FLOW.md
-│   ├── ARCHITECTURE.md
-│   └── LOG.md
-│
-├── vite.config.js
-├── package.json
-└── .env                       # VITE_PB_URL, NODE_PORT, etc.
-```
+- **Frontend Core:** Vite + React + Vanilla CSS (No Tailwind)
+- **Routing:** React Router DOM (v6)
+- **State Management:** Zustand (for Auth Store and UI states)
+- **Icons:** Lucide-React
+- **Database & Backend:** PocketBase (SQLite + Go self-hosted backend)
+- **Authentication:** PocketBase built-in JWT Auth
+- **File Storage:** PocketBase local filesystem storage
 
 ---
 
 ## 🧩 Component Architecture
 
-### Frontend (Vite + React)
+### Page Routes
+
+- **`/` (Auth View):** The root route handles user authentication.
+- **`/home` (Candidate Dashboard):** Protected route for standard users (students/staff). Contains the main feed and bottom navigation logic.
+- **`/admin` (Admin Dashboard):** Protected route for administration.
+
+### UI Components
 
 ```
-App
- ├── <Router>
- │    ├── /login         → <Login />
- │    ├── /home          → <Home />           [ProtectedRoute: candidate]
- │    │    ├── <Navbar />
- │    │    ├── <PostCard /> × N               [Vertical feed]
- │    │    │    ├── <img />                   [Item image]
- │    │    │    ├── <p />                     [Description]
- │    │    │    ├── <ClaimedBadge />          [If status=claimed]
- │    │    │    └── <button> Claim </button>  [Triggers ClaimModal]
- │    │    ├── <ClaimModal />                 [Q&A overlay]
- │    │    ├── <UploadModal />               [+ FAB sheet]
- │    │    └── <FAB />                        [+ floating button]
- │    │
- │    └── /admin         → <Admin />          [ProtectedRoute: admin]
- │         ├── <PostManager />
- │         ├── <ClaimRequests />
- │         └── <QuestionEditor />
+App (Router)
+ ├── <Login />
+ │
+ ├── <Home /> (Candidate Dashboard)
+ │    ├── <Navbar />                 (Top Navigation)
+ │    ├── <PostCard />               (Individual feed item with Image, Desc, Claim logic)
+ │    ├── <LostReportView />         (Form for submitting a pre-request lost item)
+ │    ├── <UploadModal />            (Bottom sheet for reporting a found item)
+ │    ├── <ClaimModal />             (Q&A modal for verifying a claim)
+ │    └── <FAB />                    (Floating Action Button for quick upload)
+ │
+ └── <Admin /> (Admin Dashboard)
+      ├── <Navbar />
+      └── Dashboard Tabs (Review posts, All posts, Claims & tokens, Lost reports)
 ```
+
+---
+
+## 🔌 Data Flow & Backend Communication
+
+The application strictly adheres to a layered architecture to ensure components remain decoupled from the database API. 
+
+```mermaid
+sequenceDiagram
+    participant UI as React Component (e.g. UploadModal)
+    participant Store as Zustand (authStore)
+    participant Service as Service Layer (post.service.js)
+    participant PB as PocketBase SDK
+    participant DB as SQLite DB
+
+    UI->>Store: Get current user context
+    Store-->>UI: Returns user.id & JWT Token
+    UI->>Service: Call postService.create(image, desc, etc)
+    Service->>PB: Converts to FormData & calls pb.collection().create()
+    PB->>DB: Executes SQL Insert + File Storage
+    DB-->>PB: Returns record success
+    PB-->>Service: Returns JSON record
+    Service-->>UI: Returns resolved promise
+    UI->>UI: Closes modal and triggers re-render
+```
+
+### Communication Layers
+1. **Presentation Layer (React Components):** Forms and views (`UploadModal`, `ClaimModal`, `Home`) handle user input and local state. They do NOT import `pocketbase` directly.
+2. **Service Layer (`src/services/`):** Contains files like `post.service.js` and `claim.service.js`. These export methods that wrap the PocketBase SDK. This layer is responsible for data transformation (like building `FormData` for image uploads) and executing queries.
+3. **Transport Layer (PocketBase SDK):** The `pb.js` singleton holds the active WebSocket/HTTP connection and automatically injects the user's JWT into the `Authorization` header of every REST API request.
+4. **Backend (PocketBase Go Server):** Provides the auto-generated REST API. It validates the JWT against the collection's API rules (`@request.auth.id != ''`) before accepting the operation.
+5. **Database (SQLite):** Stores the relational data locally on the server.
 
 ---
 
@@ -117,144 +94,67 @@ App
 | `password`  | string   | Hashed by PocketBase           |
 | `role`      | select   | `admin` \| `candidate`        |
 | `name`      | string   | Display name                   |
-| `created`   | datetime | Auto                           |
-
----
 
 ### Collection: `posts`
 | Field         | Type     | Notes                                   |
 | ------------- | -------- | --------------------------------------- |
 | `id`          | string   | Auto-generated PB ID                    |
-| `image`       | file     | Lost item image                         |
+| `image`       | file     | Found item image (JPG/PNG/WEBP)         |
 | `description` | text     | Short description (max 200 chars)       |
-| `status`      | select   | `active` \| `claimed`                   |
+| `category`    | text     | Primary taxonomy (e.g. Electronics)     |
+| `sub_category`| text     | Secondary taxonomy (e.g. Power Banks)   |
+| `status`      | select   | `pending` \| `active` \| `claimed`      |
 | `posted_by`   | relation | → `users.id`                            |
-| `claimed_by`  | relation | → `users.id` (nullable)                 |
-| `claimed_at`  | datetime | When admin marked as claimed (nullable) |
-| `created`     | datetime | Auto                                    |
-
----
 
 ### Collection: `item_questions`
 | Field      | Type     | Notes                          |
 |------------|----------|-------------------------------|
-| `id`       | string   | Auto-generated PB ID           |
 | `post_id`  | relation | → `posts.id`                   |
-| `question` | text     | The rule-based question text   |
-| `answer`   | text     | Correct answer (admin-set)     |
-| `created`  | datetime | Auto                           |
+| `question` | text     | The verification question      |
+| `answer`   | text     | Correct answer set by admin    |
 
----
-
-### Collection: `claim_tokens`
-| Field          | Type     | Notes                                        |
-|----------------|----------|----------------------------------------------|
-| `id`           | string   | Auto-generated PB ID                         |
-| `post_id`      | relation | → `posts.id`                                 |
-| `candidate_id` | relation | → `users.id`                                 |
-| `token`        | string   | SHA256 chained token                         |
-| `prev_token`   | string   | Previous claimant's token (chain reference)  |
-| `status`       | select   | `pending` \| `approved` \| `rejected`       |
-| `created`      | datetime | Auto                                         |
-
----
+### Collection: `lost_reports` (Pre-Request Flow)
+| Field         | Type     | Notes                                   |
+| ------------- | -------- | --------------------------------------- |
+| `user_id`     | relation | → `users.id`                            |
+| `category`    | text     | Primary taxonomy                        |
+| `sub_category`| text     | Secondary taxonomy                      |
+| `description` | text     | Description of the lost item            |
+| `date_lost`   | date     | Optional date the item was lost         |
+| `status`      | select   | `open` \| `resolved`                    |
 
 ### Collection: `claim_attempts`
 | Field          | Type     | Notes                            |
 | -------------- | -------- | -------------------------------- |
-| `id`           | string   | Auto-generated PB ID             |
 | `post_id`      | relation | → `posts.id`                     |
 | `candidate_id` | relation | → `users.id`                     |
 | `answers`      | json     | Submitted Q&A pairs              |
-| `passed`       | bool     | Whether all answers were correct |
-| `created`      | datetime | Auto                             |
+| `passed`       | bool     | Passed internal validation       |
 
 ---
 
-## 🔌 API Contract
+## 🔌 API & Service Layers
 
-### PocketBase REST Endpoints (auto-generated)
+The frontend communicates with PocketBase via specialized service files located in `src/services/`:
+
+- **`pb.js`**: Initializes the PocketBase SDK singleton.
+- **`auth.service.js`**: Handles JWT exchange, user context, and logout.
+- **`post.service.js`**: Handles CRUD operations for `posts` (including image FormData) and `lost_reports`.
+- **`claim.service.js`**: Responsible for validating user answers against `item_questions` and logging `claim_attempts`.
+
+### Underlying REST API (Auto-generated by PocketBase)
+
+Even though we use the JS SDK in the Service Layer, underneath it makes standard HTTP requests to these endpoints:
 
 | Method | Endpoint                            | Auth Required | Description                  |
 |--------|-------------------------------------|---------------|------------------------------|
 | POST   | `/api/collections/users/auth-with-password` | No  | Login (returns JWT + role)   |
-| GET    | `/api/collections/posts/records`    | Yes (candidate) | Fetch paginated feed         |
-| POST   | `/api/collections/posts/records`    | Yes (candidate) | Create new post              |
+| GET    | `/api/collections/posts/records`    | Yes         | Fetch paginated found itemsfeed |
+| POST   | `/api/collections/posts/records`    | Yes         | Create new found item post   |
 | PATCH  | `/api/collections/posts/records/:id`| Yes (admin)   | Update post status           |
 | GET    | `/api/collections/item_questions/records?filter=(post_id='...')` | Yes | Fetch Q&A for a post |
-| POST   | `/api/collections/claim_attempts/records` | Yes (candidate) | Submit claim answers    |
-| POST   | `/api/collections/claim_tokens/records`   | Yes (system) | Issue a claim token      |
-| GET    | `/api/collections/claim_tokens/records`   | Yes (admin)  | View all claim tokens     |
-
-### Node.js Express Endpoints
-
-| Method | Endpoint              | Description                                |
-|--------|-----------------------|--------------------------------------------|
-| POST   | `/api/cleanup/run`    | Manually trigger the 20-day cleanup job    |
-| GET    | `/api/cleanup/status` | Check last cleanup run & deleted count     |
-| POST   | `/api/notify/admin`   | Send notification to admin on new claim    |
-
----
-
-## 🔐 Authentication Flow
-
-```
-[Client] --POST /api/collections/users/auth-with-password--> [PocketBase]
-                                                                    │
-                                                              Returns JWT
-                                                            + user record
-                                                            (role field)
-        <-------------------------------------------------------  │
-[Client reads role]
-   ├── role = admin    → store token → navigate /admin
-   └── role = candidate → store token → navigate /home
-
-[All subsequent API calls include]
-   Header: Authorization: Bearer <token>
-```
-
----
-
-## 🔗 Token Chain Algorithm
-
-Each successful claim generates a chained token:
-
-```js
-// utils/tokenChain.js
-import { createHash } from 'crypto'
-
-export function generateClaimToken(prevToken, candidateId, timestamp) {
-  const raw = `${prevToken}::${candidateId}::${timestamp}`
-  return createHash('sha256').update(raw).digest('hex')
-}
-
-// First-ever claim on a post uses:
-// prevToken = post.id (as the genesis token)
-```
-
-This creates an **auditable chain** of claimants per item.
-
----
-
-## ⚙️ Cleanup Job Architecture
-
-```
-Node.js server (server/cron/cleanupJob.js)
-        │
-        ▼
-node-cron: runs every day at 00:00
-        │
-        ▼
-Query PocketBase REST API:
-  GET /api/collections/posts/records
-  ?filter=(status='claimed' && claimed_at <= {20_days_ago})
-        │
-        ▼
-For each matched post:
-  1. DELETE /api/files/{collection}/{recordId}/{filename}  ← remove image
-  2. PATCH  /api/collections/posts/records/{id}           ← archive record
-  3. Append entry to LOG.md / audit collection
-```
+| POST   | `/api/collections/lost_reports/records` | Yes | Submit a lost item report |
+| POST   | `/api/collections/claim_attempts/records` | Yes | Submit claim answers |
 
 ---
 
@@ -265,30 +165,9 @@ For each matched post:
 | `name`         | Lost & Found Portal              |
 | `short_name`   | L&F                              |
 | `display`      | `standalone`                     |
-| `theme_color`  | `#1a1a2e`                        |
+| `theme_color`  | `#1c1c1c`                        |
 | `start_url`    | `/`                              |
-| `icons`        | 192×192, 512×512 PNG             |
 | `Service Worker` | Vite PWA plugin (Workbox)      |
-| `Cache Strategy` | Network-first for API, Cache-first for assets |
-
----
-
-## 🚀 Deployment Topology
-
-```
-┌──────────────────────────────────────────────────────┐
-│                     Production                       │
-│                                                      │
-│  ┌─────────────┐    ┌──────────────┐    ┌─────────┐  │
-│  │  Vite PWA   │───▶│  Node.js     │───▶│PocketBase│ │
-│  │  (Static    │    │  Express     │    │ (Backend │ │
-│  │   Hosting)  │    │  (Cron +     │    │  + DB +  │ │
-│  │  Vercel /   │    │   Notify)    │    │  Files)  │ │
-│  │  Netlify    │    │  VPS/Render  │    │  VPS     │ │
-│  └─────────────┘    └──────────────┘    └─────────┘  │
-│                                                      │
-└──────────────────────────────────────────────────────┘
-```
 
 ---
 
@@ -296,3 +175,4 @@ For each matched post:
 - [AGENTS.md](./AGENTS.md) — Agent roles and permissions
 - [FLOW.md](./FLOW.md) — Step-by-step user interaction flows
 - [LOG.md](./LOG.md) — Development changelog and decision log
+;

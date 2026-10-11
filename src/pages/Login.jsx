@@ -1,176 +1,112 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// src/pages/Login.jsx
-// Login screen — role-aware auth entry point
-// Admin  → /admin portal
-// Candidate → /home feed portal
-// ─────────────────────────────────────────────────────────────────────────────
-
-import React, { useState, useEffect } from 'react'
-import { useNavigate }     from 'react-router-dom'
-import { authService }     from '@/services/auth.service'
-import { useAuthStore }    from '@/store/authStore'
-import './Login.css'
-
-
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { authService } from '@/services/auth.service'
+import { useAuthStore } from '@/store/authStore'
+import { Shield, User, Lock, ArrowRight, AlertTriangle } from 'lucide-react'
+import '@/styles/Login.css'
 
 export default function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [isAdminMode, setIsAdminMode] = useState(false)
+  
   const navigate = useNavigate()
-  const setUser  = useAuthStore((s) => s.setUser)
+  const setUser = useAuthStore((s) => s.setUser)
 
-  const user     = useAuthStore((s) => s.user)
-
-  useEffect(() => {
-    if (user) {
-      if (user.role === 'admin') {
-        navigate('/admin', { replace: true })
-      } else if (user.role === 'student' || user.role === 'staff') {
-        navigate('/home', { replace: true })
-      } else {
-        navigate('/home', { replace: true }) // fallback
-      }
-    }
-  }, [user, navigate])
-
-  const [email,       setEmail]       = useState('')
-  const [password,    setPassword]    = useState('')
-  const [showPass,    setShowPass]    = useState(false)
-  const [error,       setError]       = useState('')
-  const [loading,     setLoading]     = useState(false)
-
-  // ── Handlers ───────────────────────────────────────────────────────────────
-
-
-
-  /**
-   * Authenticates the user and routes by role.
-   * @param {React.FormEvent} e
-   */
   async function handleSubmit(e) {
     e.preventDefault()
-    if (!email || !password) { setError('Please fill in all fields.'); return }
-
     setError('')
     setLoading(true)
 
     try {
       const user = await authService.login(email, password)
-
       setUser(user)
+      
+      // Route based on role as defined in FLOW.md
       if (user.role === 'admin') {
-        navigate('/admin', { replace: true })
+        navigate('/admin')
       } else {
-        navigate('/home', { replace: true })
+        navigate('/home')
       }
-    } catch {
-      setError('Invalid email or password. Please try again.')
+    } catch (err) {
+      setError('Invalid email or password.')
     } finally {
       setLoading(false)
     }
   }
 
-  // ── Render ─────────────────────────────────────────────────────────────────
   return (
-    <main id="login-page" className="login-page">
-      <section className="login-card" aria-label="Sign in to Lost and Found">
-
-        {/* ── Logo ─────────────────────────────────────────────────────── */}
-        <div className="login-logo-wrapper">
-          <div className="login-logo-bg" aria-hidden="true">🔍</div>
+    <div className="login-container">
+      <div className="login-card">
+        <div className="login-header">
+          <div className="login-logo">
+            <Shield size={32} color="var(--accent)" />
+          </div>
+          <h1>Lost & Found</h1>
+          <p>Sign in to your {isAdminMode ? 'Admin' : 'Candidate'} portal</p>
         </div>
 
-        <h1 className="login-title">Lost &amp; Found</h1>
-        <p className="login-subtitle">Sign in to your portal</p>
+        <div className="mode-toggle">
+          <button 
+            type="button" 
+            className={`toggle-btn ${!isAdminMode ? 'active' : ''}`}
+            onClick={() => setIsAdminMode(false)}
+          >
+            Candidate
+          </button>
+          <button 
+            type="button" 
+            className={`toggle-btn ${isAdminMode ? 'active' : ''}`}
+            onClick={() => setIsAdminMode(true)}
+          >
+            Admin
+          </button>
+        </div>
 
+        <form className="login-form" onSubmit={handleSubmit}>
+          {error && (
+            <div className="error-banner">
+              <AlertTriangle size={18} /> {error}
+            </div>
+          )}
 
-
-        {/* ── Form ─────────────────────────────────────────────────────── */}
-        <form
-          id="login-form"
-          className="login-form"
-          onSubmit={handleSubmit}
-          noValidate
-        >
-          {/* Email */}
-          <div className="form-group">
-            <label className="field-label" htmlFor="login-email">Email address</label>
-            <div className="field-input-wrapper">
-              <span className="field-input-icon" aria-hidden="true">✉️</span>
-              <input
-                id="login-email"
-                type="email"
-                className="field-input with-icon"
-                placeholder="you@example.com"
+          <div className="input-group">
+            <label>Email Address</label>
+            <div className="input-wrapper">
+              <User size={18} className="input-icon" />
+              <input 
+                type="email" 
+                className="input-field with-icon" 
+                placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                autoComplete="email"
-                disabled={loading}
               />
             </div>
           </div>
 
-          {/* Password */}
-          <div className="form-group">
-            <label className="field-label" htmlFor="login-password">Password</label>
-            <div className="field-input-wrapper">
-              <span className="field-input-icon" aria-hidden="true">🔒</span>
-              <input
-                id="login-password"
-                type={showPass ? 'text' : 'password'}
-                className="field-input with-icon"
+          <div className="input-group">
+            <label>Password</label>
+            <div className="input-wrapper">
+              <Lock size={18} className="input-icon" />
+              <input 
+                type="password" 
+                className="input-field with-icon" 
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                autoComplete="current-password"
-                disabled={loading}
               />
-              <button
-                type="button"
-                className="password-toggle"
-                aria-label={showPass ? 'Hide password' : 'Show password'}
-                onClick={() => setShowPass((v) => !v)}
-                tabIndex={0}
-              >
-                {showPass ? '🙈' : '👁️'}
-              </button>
             </div>
           </div>
 
-          {/* Error */}
-          {error && (
-            <p id="login-error" className="login-error" role="alert" aria-live="assertive">
-              <span aria-hidden="true">⚠️</span> {error}
-            </p>
-          )}
-
-          {/* Submit */}
-          <button
-            id="login-submit"
-            type="submit"
-            className="btn-login"
-            disabled={loading}
-            aria-busy={loading}
-          >
-            {loading ? (
-              <>
-                <span className="spinner" aria-hidden="true" />
-                Signing in…
-              </>
-            ) : (
-              <>
-                🚀 Sign In
-              </>
-            )}
+          <button type="submit" className="btn-primary login-submit" disabled={loading}>
+            {loading ? 'Authenticating...' : <>Sign In <ArrowRight size={18} /></>}
           </button>
         </form>
-
-        {/* ── Footer ────────────────────────────────────────────────────── */}
-        <p className="login-footer">
-          Lost &amp; Found Portal · Secure sign-in
-        </p>
-
-      </section>
-    </main>
+      </div>
+    </div>
   )
 }

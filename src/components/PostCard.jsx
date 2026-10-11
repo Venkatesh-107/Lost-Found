@@ -1,58 +1,54 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// src/components/PostCard.jsx
-// Single post card — image, description, status badge, and claim button
-// Used inside the vertical scroll-snap feed on the Home page
-// ─────────────────────────────────────────────────────────────────────────────
+import React, { useState, useEffect } from 'react'
+import { Ticket } from 'lucide-react'
+import pb from '@/services/pb'
+import '@/styles/PostCard.css'
 
-import React from 'react'
-import { postService } from '@/services/post.service'
-import ClaimedBadge    from './ClaimedBadge'
+export default function PostCard({ post, imageUrl, onClaimClick }) {
+  const [postCount, setPostCount] = useState(0)
 
-/**
- * @param {Object}   props
- * @param {import('@/services/post.service').Post} props.post     - Post record
- * @param {Function} props.onClaim - Called when the Claim button is clicked
- */
-export default function PostCard({ post, onClaim }) {
-  const isClaimed = post.status === 'claimed'
-  const imageUrl  = postService.getImageUrl(post, post.image)
+  useEffect(() => {
+    if (post.posted_by) {
+      pb.collection('posts').getList(1, 1, {
+        filter: `posted_by = "${post.posted_by}"`,
+        fields: 'id'
+      }).then(res => setPostCount(res.totalItems)).catch(() => {})
+    }
+  }, [post.posted_by])
+
+  const postDate = post.created ? new Date(post.created).toLocaleDateString() : ''
 
   return (
-    <article
-      id={`post-card-${post.id}`}
-      className="post-card"
-      aria-label={`Lost item: ${post.description}`}
-    >
-      {/* ── Image ─────────────────────────────────────────────────────────── */}
-      <div className="post-image-wrapper">
-        <img
-          src={imageUrl}
-          alt={post.description}
-          className="post-image"
-          loading="lazy"
-        />
-        {isClaimed && <ClaimedBadge />}
+    <div className="post-card">
+      <div className="post-header">
+        <div className="post-avatar">
+          {post.expand?.posted_by?.name ? post.expand.posted_by.name.charAt(0).toUpperCase() : 'H'}
+        </div>
+        <div className="post-meta">
+          <div className="post-author">
+            {post.expand?.posted_by?.name || 'hemu'} 
+            <span className="post-count-badge"> ({postCount} {postCount === 1 ? 'post' : 'posts'})</span>
+          </div>
+          <div className="post-time">{postDate}</div>
+        </div>
       </div>
 
-      {/* ── Body ──────────────────────────────────────────────────────────── */}
-      <div className="post-body">
-        <p className="post-description">{post.description}</p>
-
-        {!isClaimed ? (
-          <button
-            id={`claim-btn-${post.id}`}
-            className="btn-claim"
-            onClick={onClaim}
-            aria-label={`Claim this item: ${post.description}`}
-          >
-            🏷 Claim
-          </button>
+      <div className="post-image-container">
+        {imageUrl ? (
+          <img src={imageUrl} alt={post.description} loading="lazy" />
         ) : (
-          <span className="claimed-label" aria-label="This item has been claimed">
-            ✅ Claimed
-          </span>
+          <div className="post-placeholder">No Image Available</div>
         )}
       </div>
-    </article>
+
+      <div className="post-content">
+        <p className="post-description">{post.description}</p>
+        
+        {post.status !== 'claimed' && (
+          <button className="btn-primary claim-token-btn" onClick={() => onClaimClick(post)}>
+            <Ticket size={18} /> Token #1 • 0 ahead
+          </button>
+        )}
+      </div>
+    </div>
   )
 }

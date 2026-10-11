@@ -104,68 +104,68 @@ This document serves as the **living development log** for the Lost & Found PWA.
 
 ---
 
-### [v0.2.0] — Planned — Project Scaffold
-- [ ] Initialize Vite + React project
-- [ ] Install and configure PocketBase JS SDK
-- [ ] Set up `vite-plugin-pwa` with manifest and service worker
-- [ ] Create PocketBase collections (`users`, `posts`, `item_questions`, `claim_tokens`, `claim_attempts`)
-- [ ] Set up Node.js Express server with basic route structure
-- [ ] Configure `.env` for PocketBase URL and Node port
+### [v0.2.0] — 2026-10-10 — Project Scaffold
+- [x] Initialize Vite + React project
+- [x] Install and configure PocketBase JS SDK
+- [x] Set up `vite-plugin-pwa` with manifest and service worker
+- [x] Create PocketBase collections (`users`, `posts`, `item_questions`, `claim_tokens`, `claim_attempts`)
+- [x] Set up Node.js Express server with basic route structure
+- [x] Configure `.env` for PocketBase URL and Node port
 
 ---
 
-### [v0.3.0] — Planned — Authentication Module
-- [ ] Build `Login.jsx` page with Admin / Candidate tabs
-- [ ] Implement `auth.service.js` using PocketBase auth API
-- [ ] Implement `AUTH_AGENT` role-based routing logic
-- [ ] Set up protected routes (`/admin`, `/home`)
-- [ ] Persist auth session in localStorage via PocketBase SDK
+### [v0.3.0] — 2026-10-10 — Authentication Module
+- [x] Build `Login.jsx` page with Admin / Candidate tabs
+- [x] Implement `auth.service.js` using PocketBase auth API
+- [x] Implement `AUTH_AGENT` role-based routing logic
+- [x] Set up protected routes (`/admin`, `/home`)
+- [x] Persist auth session in localStorage via PocketBase SDK
 
 ---
 
-### [v0.4.0] — Planned — Candidate Feed
-- [ ] Build `Home.jsx` with vertical scroll-snap feed layout
-- [ ] Build `PostCard.jsx` component (image, description, claim button)
-- [ ] Implement `useFeed.js` hook with paginated PocketBase queries
-- [ ] Add lazy loading for post images
-- [ ] Add `ClaimedBadge.jsx` overlay for claimed posts
-- [ ] Build `FAB.jsx` (floating `+` button)
+### [v0.4.0] — 2026-10-10 — Candidate Feed
+- [x] Build `Home.jsx` with vertical scroll-snap feed layout
+- [x] Build `PostCard.jsx` component (image, description, claim button)
+- [x] Implement `useFeed.js` hook with paginated PocketBase queries
+- [x] Add lazy loading for post images
+- [x] Add `ClaimedBadge.jsx` overlay for claimed posts
+- [x] Build `FAB.jsx` (floating `+` button)
 
 ---
 
-### [v0.5.0] — Planned — Upload & Post Flow
-- [ ] Build `UploadModal.jsx` (image picker + description field)
-- [ ] Implement `post.service.js` for post creation
-- [ ] Build `POST_AGENT` validation logic (file type, size, description)
-- [ ] Test end-to-end post creation flow
+### [v0.5.0] — 2026-10-10 — Upload & Post Flow
+- [x] Build `UploadModal.jsx` (image picker + description field)
+- [x] Implement `post.service.js` for post creation
+- [x] Build `POST_AGENT` validation logic (file type, size, description)
+- [x] Test end-to-end post creation flow
 
 ---
 
-### [v0.6.0] — Planned — Claim System
-- [ ] Build `ClaimModal.jsx` with dynamic Q&A form
-- [ ] Implement `claim.service.js` for Q&A fetch and answer submission
-- [ ] Implement `tokenChain.js` SHA-256 token generation
-- [ ] Implement `CLAIM_AGENT` pass/fail logic
-- [ ] Store claim attempts and tokens in PocketBase
-- [ ] Notify admin on verified claim
+### [v0.6.0] — 2026-10-10 — Claim System
+- [x] Build `ClaimModal.jsx` with dynamic Q&A form
+- [x] Implement `claim.service.js` for Q&A fetch and answer submission
+- [x] Implement `tokenChain.js` SHA-256 token generation
+- [x] Implement `CLAIM_AGENT` pass/fail logic
+- [x] Store claim attempts and tokens in PocketBase
+- [x] Notify admin on verified claim
 
 ---
 
-### [v0.7.0] — Planned — Admin Portal
-- [ ] Build `Admin.jsx` dashboard layout
-- [ ] Build `PostManager.jsx` — view all posts, update status
-- [ ] Build `ClaimRequests.jsx` — review pending claim tokens
-- [ ] Build `QuestionEditor.jsx` — set rule-based Q&A per post
-- [ ] Implement "Mark as Distributed" action
+### [v0.7.0] — 2026-10-10 — Admin Portal
+- [x] Build `Admin.jsx` dashboard layout
+- [x] Build `PostManager.jsx` — view all posts, update status
+- [x] Build `ClaimRequests.jsx` — review pending claim tokens
+- [x] Build `QuestionEditor.jsx` — set rule-based Q&A per post
+- [x] Implement "Mark as Distributed" action
 
 ---
 
-### [v0.8.0] — Planned — Cleanup Cron Job
-- [ ] Set up `cleanupJob.js` with `node-cron`
-- [ ] Implement query for claimed posts older than 20 days
-- [ ] Implement image deletion via PocketBase file API
-- [ ] Implement post archival/deletion
-- [ ] Add cleanup audit log entries
+### [v0.8.0] — 2026-10-10 — Cleanup Cron Job
+- [x] Set up `cleanupJob.js` with `node-cron`
+- [x] Implement query for claimed posts older than 20 days
+- [x] Implement image deletion via PocketBase file API
+- [x] Implement post archival/deletion
+- [x] Add cleanup audit log entries
 
 ---
 

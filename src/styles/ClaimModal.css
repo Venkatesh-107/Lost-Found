@@ -1,0 +1,97 @@
+.claim-modal {
+  background: var(--bg-card);
+  width: 100%;
+  max-width: 500px;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  animation: slideUp 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-loader {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.claim-instructions {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+.questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.success-view {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.success-icon-wrap {
+  width: 80px;
+  height: 80px;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+}
+
+.success-view h3 {
+  font-size: 1.5rem;
+  color: var(--success);
+}
+
+.success-view p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.token-box {
+  background: var(--bg-surface2);
+  border: 1px dashed var(--accent);
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  width: 100%;
+  margin: 16px 0;
+}
+
+.token-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-light);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.token-value {
+  font-family: monospace;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.info-banner {
+  background: rgba(255,255,255,0.05);
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}

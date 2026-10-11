@@ -1,25 +1,36 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// src/components/Navbar.jsx — Top navigation bar
-// ─────────────────────────────────────────────────────────────────────────────
 import React from 'react'
 import { authService } from '@/services/auth.service'
 import { useAuthStore } from '@/store/authStore'
-import { useNavigate }  from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { Search, LogOut } from 'lucide-react'
+import '@/styles/Navbar.css'
 
-export default function Navbar() {
-  const navigate  = useNavigate()
-  const clearUser = useAuthStore((s) => s.clearUser)
+export default function Navbar({ title = "Lost & Found" }) {
+  const user = useAuthStore(s => s.user)
+  const clearUser = useAuthStore(s => s.clearUser)
+  const navigate = useNavigate()
 
   function handleLogout() {
     authService.logout()
     clearUser()
-    navigate('/login', { replace: true })
+    navigate('/login')
   }
 
   return (
-    <header className="navbar">
-      <span className="navbar-brand">🔍 Lost &amp; Found</span>
-      <button className="btn-ghost" onClick={handleLogout}>Logout</button>
-    </header>
+    <nav className="navbar">
+      <div className="navbar-brand">
+        <div className="navbar-icon"><Search size={20} /></div>
+        <span className="navbar-title">{title}</span>
+      </div>
+      
+      <div className="navbar-actions">
+        <div className="navbar-badge-live">
+          <div className="live-dot"></div> Live
+        </div>
+        <button onClick={handleLogout} className="btn-ghost btn-logout" aria-label="Logout">
+          <LogOut size={18} />
+        </button>
+      </div>
+    </nav>
   )
 }

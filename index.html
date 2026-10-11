@@ -2,13 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Lost & Found Portal — Report and claim lost items in your community" />
+    <meta name="theme-color" content="#1a1a2e" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
     <title>Lost & Found Portal</title>
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        document.body.innerHTML += '<div style="color:red; padding: 20px; z-index:9999; position:absolute; top:0; background:black; width:100%; word-wrap:break-word;">' + 
+          'GLOBAL ERROR: ' + message + '<br>' + source + ':' + lineno + ':' + colno + '<br>' + (error ? error.stack : '') + 
+          '</div>';
+      };
+      window.addEventListener('unhandledrejection', function(event) {
+        document.body.innerHTML += '<div style="color:orange; padding: 20px; z-index:9999; position:absolute; top:100px; background:black; width:100%; word-wrap:break-word;">' + 
+          'PROMISE REJECTION: ' + event.reason + 
+          '</div>';
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
